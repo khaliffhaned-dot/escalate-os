@@ -1,0 +1,30 @@
+{
+  "name": "escalate-os",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "deploy": "npx @opennextjs/cloudflare deploy",
+    "preview": "npx @opennextjs/cloudflare preview",
+    "cf-typegen": "npx @opennextjs/cloudflare cf-typegen"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.0",
+    "wrangler": "^3.90.0"
+  }
+}
