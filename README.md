@@ -1,36 +1,33 @@
-# Escalate OS — Demo MVP
+# Escalate OS — Combined MVP
 
 Governance Intelligence Platform.  
 From signal to decision to accountability.
 
-Built for presentation to investors and government agencies.
+Combines the escalate-os product surface with the peranti-MY data foundation (D1).
 
-## Demo flow
-1. Open the site.
-2. Click “Enter Situation Room” → login with password `demo`.
-3. Create an incident or select an existing one.
-4. Change status → see the audit trail update.
-5. Record a decision linked to the incident.
+## What persists
+- Incidents
+- Status changes
+- Decisions
+- Audit log
 
-## Stack
-- Next.js 15 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS
-- Cloudflare Workers via OpenNext
+All rows carry `tenant_id`.
 
 ## Local
 ```bash
 npm install
+npm run db:create          # once — copy the database_id into wrangler.jsonc
+npm run db:migrate
 npm run dev
 ```
 
-## Deploy to Cloudflare
+## Deploy
 ```bash
-npm install
 npx wrangler login
+npx wrangler d1 create escalate_db   # update wrangler.jsonc with the real id
+npx wrangler d1 execute escalate_db --remote --file=./migrations/0001_init.sql
 npx @opennextjs/cloudflare build
 npm run deploy
 ```
 
-Password for the demo gate is `demo`. Replace with real auth before any production use.
+Demo password: `demo`. Replace with real auth before production.

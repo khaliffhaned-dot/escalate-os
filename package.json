@@ -1,6 +1,6 @@
 {
   "name": "escalate-os",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,9 @@
     "lint": "next lint",
     "deploy": "npx @opennextjs/cloudflare deploy",
     "preview": "npx @opennextjs/cloudflare preview",
-    "cf-typegen": "npx @opennextjs/cloudflare cf-typegen"
+    "cf-typegen": "npx @opennextjs/cloudflare cf-typegen",
+    "db:create": "wrangler d1 create escalate_db",
+    "db:migrate": "wrangler d1 execute escalate_db --local --file=./migrations/0001_init.sql"
   },
   "dependencies": {
     "next": "^15.0.3",
