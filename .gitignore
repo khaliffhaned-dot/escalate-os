@@ -1,0 +1,14 @@
+# Dependencies
+node_modules
+.next
+.open-next
+.wrangler
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Debug
+npm-debug.log*
+.DS_Store
