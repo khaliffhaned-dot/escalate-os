@@ -1,5 +1,5 @@
--- Combined schema: escalate-os rooms + peranti-MY D1 patterns
--- tenant_id on every table from day one
+-- Combined schema with real auth (sessions + hashed passwords)
+-- tenant_id on every table
 
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
@@ -10,6 +10,17 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TEXT DEFAULT (datetime('now')),
   UNIQUE(tenant_id, email)
 );
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  tenant_id TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  created_at TEXT DEFAULT (datetime('now')),
+  FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
 
 CREATE TABLE IF NOT EXISTS incidents (
   id TEXT PRIMARY KEY,
@@ -49,9 +60,16 @@ CREATE TABLE IF NOT EXISTS decisions (
   FOREIGN KEY(incident_id) REFERENCES incidents(id)
 );
 
--- Demo seed (password is 'demo' — replace before any real use)
+-- Demo user: email demo@escalate.local / password demo
+-- Hash is PBKDF2-SHA256
 INSERT OR IGNORE INTO users (id, tenant_id, email, password_hash, role)
-VALUES ('user-demo', 'tenant-demo', 'demo@escalate.local', 'demo', 'admin');
+VALUES (
+  'user-demo',
+  'tenant-demo',
+  'demo@escalate.local',
+  'pbkdf2:100000:Sa6U8nLhBvIRIn1kX4Y5fA==:u3mKO5qCwLUU5Ju2lbV+gIWTp2n+ehHl5powOGNHUAQ=',
+  'admin'
+);
 
 INSERT OR IGNORE INTO incidents (id, tenant_id, title, summary, severity, status, owner, created_by)
 VALUES 

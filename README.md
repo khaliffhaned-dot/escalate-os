@@ -1,17 +1,18 @@
-# Escalate OS — Combined MVP
+# Escalate OS — Combined MVP (with real auth)
 
 Governance Intelligence Platform.  
 From signal to decision to accountability.
 
-Combines the escalate-os product surface with the peranti-MY data foundation (D1).
+## Auth
+- Passwords stored as PBKDF2-SHA256 hashes.
+- Sessions stored in D1 (`sessions` table).
+- httpOnly, secure, sameSite=lax cookie.
+- Every server action re-validates the session and scopes by `tenant_id`.
 
-## What persists
-- Incidents
-- Status changes
-- Decisions
-- Audit log
-
-All rows carry `tenant_id`.
+## Seed
+Demo account (replace before production):
+- Email: `demo@escalate.local`
+- Password: `demo`
 
 ## Local
 ```bash
@@ -29,5 +30,3 @@ npx wrangler d1 execute escalate_db --remote --file=./migrations/0001_init.sql
 npx @opennextjs/cloudflare build
 npm run deploy
 ```
-
-Demo password: `demo`. Replace with real auth before production.
